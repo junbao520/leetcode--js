@@ -31,11 +31,10 @@ board 和 word 中只包含大写和小写英文字母。
 链接：https://leetcode-cn.com/problems/word-search
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。*/
 
-
-var exist = function(board, word) {
+const directions = [[1, 0], [-1, 0], [0, 1], [0, -1]];
+var exist = function (board, word) {
     var rLen = board.length,
         cLen = board[0].length;
-        
     return helper(word, board, rLen, cLen);
 };
 
@@ -43,69 +42,50 @@ function helper(word, board, rLen, cLen) {
     var ch = word.charAt(0),
         i,
         j;
-        
+
     for (i = 0; i < rLen; i++) {
         for (j = 0; j < cLen; j++) {
             if (board[i][j] === ch) {
                 board[i][j] = '*';
-                if (bfs(1, word, i, j, board, rLen, cLen)) {
+                if (dfs(1, word, i, j, board, rLen, cLen)) {
                     return true;
                 }
                 board[i][j] = ch;
             }
         }
     }
-    
+
     return false;
 }
 //bfs 宽度优先搜索
 //dfs 深度优先搜索
-function bfs(index, word, i, j, board, rLen, cLen) {
+function dfs(index, word, i, j, board, rLen, cLen) {
     if (index === word.length) {
         return true;
     }
-    
     var ch = word.charAt(index);
-    
-    if (i - 1 >= 0 && board[i - 1][j] === ch) {
-        board[i - 1][j] = '*';
-        
-        if (bfs(index + 1, word, i - 1, j, board, rLen, cLen)) {
-            return true;
+    for(const [dx,dy] of directions)
+    {
+        let newi=i + dx;
+        let newj=j+dy;
+        if (newi>=0&&newi < rLen&&newj>=0&&newj<cLen && board[newi][newj] === ch) {
+            board[newi][newj] = '*';
+            if (dfs(index + 1, word, newi, newj, board, rLen, cLen)) {
+                return true;
+            }
+            board[newi][newj] = ch;
         }
-        
-        board[i - 1][j] = ch;
     }
-    
-    if (j - 1 >= 0 && board[i][j - 1] === ch) {
-        board[i][j - 1] = '*';
-        
-        if (bfs(index + 1, word, i, j - 1, board, rLen, cLen)) {
-            return true;
-        }
-        
-        board[i][j - 1] = ch;
-    } 
-    
-    if (i + 1 < rLen && board[i + 1][j] === ch) {
-        board[i + 1][j] = '*';
-        
-        if (bfs(index + 1, word, i + 1, j, board, rLen, cLen)) {
-            return true;
-        }
-        
-        board[i + 1][j] = ch;
-    }
-    
-    if (j + 1 < cLen && board[i][j + 1] === ch) {
-        board[i][j + 1] = '*';
-        
-        if (bfs(index + 1, word, i, j + 1, board, rLen, cLen)) {
-            return true;
-        }
-        
-        board[i][j + 1] = ch;
-    }
-    
+
 }
 
+let board =
+[
+  ['A','B','C','E'],
+  ['S','F','C','S'],
+  ['A','D','E','E']
+]
+
+let word="ABC"
+
+console.log(exist(board,word))
