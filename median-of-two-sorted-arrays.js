@@ -41,23 +41,6 @@ var findMedianSortedArrays = function (nums1, nums2) {
     let midRight = 0;
     let nums1Start = 0;
     let nums2Start = 0;
-    //0<0//0 小于0 
-    // 10 //6 此  循环6次  4,5
-    //多循环一次
-    //5+1//6  循环2次
-    //2 //循环次数超过了
-    // for (int i = 0; i <= len / 2; i++) {
-    //     left = right;
-    //     if (aStart < m && (bStart >= n || A[aStart] < B[bStart])) {
-    //         right = A[aStart++];
-    //     } else {
-    //         right = B[bStart++];
-    //     }
-    // }
-    // if ((len & 1) == 0)
-    //     return (left + right) / 2.0;
-    // else
-    //     return right;
     for (let i = 0; i <=len; i++) {
         midLeft = midRight;
         if (nums1Start<m&&(nums2Start>=n||nums1[nums1Start] < nums2[nums2Start])) {
