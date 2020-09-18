@@ -6,7 +6,6 @@ var sortedSquares = function (A) {
     let A1 = [];
     let A2 = [];
     let A3 = [];
-
     A1 = A.filter(s => s <= 0).map(s => s * s);
     A2 = A.filter(S => S > 0).map(s => s * s);
     A1 = A1.reverse();
